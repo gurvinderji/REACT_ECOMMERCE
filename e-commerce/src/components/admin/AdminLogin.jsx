@@ -1,5 +1,3 @@
-import Password from "antd/es/input/Password";
-// import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
@@ -11,7 +9,7 @@ const schema = Yup.object({
     .test("is-gmail", "Only gmail id allowed", (value) => {
       return value && value.toLowerCase().endsWith("gmail.com");
     }),
-  Password: Yup.string()
+  password: Yup.string()
     .required("Password field is required")
     .min(6, "Minimum 6 characters required")
     .matches(/[A-Z]/, "Atleast one uppercase required")
@@ -27,7 +25,7 @@ const AdminLogin = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      Password: "",
+      password: "",
     },
     validationSchema: schema,
     onSubmit: login,
@@ -38,7 +36,7 @@ const AdminLogin = () => {
         <img src="/images/admin-login.jpeg" className="rounded-l-lg" />
         <div className="flex flex-col justify-center px-10 gap-6">
           <h1 className="text-2xl font-semibold text-gray-600">Admin Panel</h1>
-          <form className="flex flex-col gap-5" onSubmit={formik.login}>
+          <form className="flex flex-col gap-5" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-1">
               <label className="text-zinc-700 font-medium">Email</label>
               <input
@@ -63,9 +61,9 @@ const AdminLogin = () => {
                 placeholder="************"
                 onChange={formik.handleChange}
               />
-              {formik.errors.Password && (
+              {formik.errors.password && (
                 <small className="text-rose-500 font-semibold">
-                  {formik.errors.Password}
+                  {formik.errors.password}
                 </small>
               )}
             </div>
